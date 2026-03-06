@@ -32,8 +32,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ============================================
-// SMOOTH SCROLL FOR NAVIGATION LINKS
-// ============================================
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -157,47 +156,47 @@ productCards.forEach(card => {
 });
 
 // ============================================
-// ADD TO CART ANIMATION
+// ADD TO CART ANIMATION - REMOVED TO ALLOW REDIRECT
 // ============================================
-const addToCartBtns = document.querySelectorAll('.btn-add');
+// const addToCartBtns = document.querySelectorAll('.btn-add');
 
-addToCartBtns.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Create ripple effect
-        const ripple = document.createElement('span');
-        ripple.style.cssText = `
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 50%;
-            animation: ripple 0.6s ease-out;
-            pointer-events: none;
-        `;
-        
-        const rect = this.getBoundingClientRect();
-        ripple.style.left = (e.clientX - rect.left - 10) + 'px';
-        ripple.style.top = (e.clientY - rect.top - 10) + 'px';
-        
-        this.style.position = 'relative';
-        this.appendChild(ripple);
-        
-        // Change button text temporarily
-        const originalText = this.textContent;
-        this.textContent = '✓ Added!';
-        this.style.background = '#27ae60';
-        
-        setTimeout(() => {
-            this.textContent = originalText;
-            this.style.background = '';
-            ripple.remove();
-        }, 1500);
-    });
-});
+// addToCartBtns.forEach(btn => {
+//     btn.addEventListener('click', function(e) {
+//         e.preventDefault();
 
-// Add ripple animation to stylesheet
+//         // Create ripple effect
+//         const ripple = document.createElement('span');
+//         ripple.style.cssText = `
+//             position: absolute;
+//             width: 20px;
+//             height: 20px;
+//             background: rgba(255,255,255,0.7);
+//             border-radius: 50%;
+//             animation: ripple 0.6s ease-out;
+//             pointer-events: none;
+//         `;
+
+//         const rect = this.getBoundingClientRect();
+//         ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+//         ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+
+//         this.style.position = 'relative';
+//         this.appendChild(ripple);
+
+//         // Change button text temporarily
+//         const originalText = this.textContent;
+//         this.textContent = '✓ Added!';
+//         this.style.background = '#27ae60';
+
+//         setTimeout(() => {
+//             this.textContent = originalText;
+//             this.style.background = '';
+//             ripple.remove();
+//         }, 1500);
+//     });
+// });
+
+// Add animations to stylesheet
 const style = document.createElement('style');
 style.textContent = `
     @keyframes ripple {
@@ -205,6 +204,22 @@ style.textContent = `
             width: 100px;
             height: 100px;
             opacity: 0;
+        }
+    }
+    @keyframes slideDown {
+        from {
+            transform: translateX(-50%) translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    }
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
         }
     }
 `;
@@ -250,44 +265,39 @@ floatingCards.forEach((card, index) => {
 // ============================================
 const newsletterForm = document.querySelector('.newsletter-form');
 const newsletterInput = document.querySelector('.newsletter-input');
+const newsletterLink = document.querySelector('.newsletter-form .btn');
 
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
+if (newsletterLink) {
+    newsletterLink.addEventListener('click', (e) => {
         e.preventDefault();
         
-        const email = newsletterInput.value;
+        const email = newsletterInput.value.trim();
         
-        if (email && validateEmail(email)) {
-            // Create success message
-            const successMsg = document.createElement('div');
-            successMsg.textContent = '✓ Thank you for subscribing!';
-            successMsg.style.cssText = `
-                position: fixed;
-                top: 100px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #27ae60;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 50px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                z-index: 10000;
-                animation: slideDown 0.5s ease-out;
-            `;
-            
-            document.body.appendChild(successMsg);
-            newsletterInput.value = '';
-            
-            setTimeout(() => {
-                successMsg.style.animation = 'fadeOut 0.5s ease-out';
-                setTimeout(() => successMsg.remove(), 500);
-            }, 3000);
-        } else {
+        if (!email) {
+            // Show error for empty email
             newsletterInput.style.border = '2px solid #e74c3c';
+            newsletterInput.placeholder = 'Please enter your email';
             setTimeout(() => {
                 newsletterInput.style.border = '';
+                newsletterInput.placeholder = 'Enter your email address';
             }, 2000);
+            return;
         }
+        
+        if (!validateEmail(email)) {
+            // Show error for invalid email
+            newsletterInput.style.border = '2px solid #e74c3c';
+            newsletterInput.value = '';
+            newsletterInput.placeholder = 'Please enter a valid email';
+            setTimeout(() => {
+                newsletterInput.style.border = '';
+                newsletterInput.placeholder = 'Enter your email address';
+            }, 2000);
+            return;
+        }
+        
+        // Email is valid, redirect to 404.html
+        window.location.href = '404.html';
     });
 }
 
@@ -300,49 +310,45 @@ function validateEmail(email) {
 // CONTACT FORM SUBMISSION
 // ============================================
 const contactForm = document.querySelector('.contact-form');
+const contactLink = document.querySelector('.contact-form .btn');
 
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+if (contactLink) {
+    contactLink.addEventListener('click', (e) => {
         e.preventDefault();
         
         const inputs = contactForm.querySelectorAll('.form-input');
         let isValid = true;
+        let firstInvalidInput = null;
         
         inputs.forEach(input => {
-            if (!input.value.trim()) {
+            const value = input.value.trim();
+            
+            if (!value) {
                 input.style.border = '2px solid #e74c3c';
+                if (!firstInvalidInput) firstInvalidInput = input;
                 isValid = false;
             } else {
                 input.style.border = '';
+                
+                // Additional validation for email
+                if (input.type === 'email' && !validateEmail(value)) {
+                    input.style.border = '2px solid #e74c3c';
+                    if (!firstInvalidInput) firstInvalidInput = input;
+                    isValid = false;
+                }
             }
         });
         
-        if (isValid) {
-            // Create success message
-            const successMsg = document.createElement('div');
-            successMsg.textContent = '✓ Message sent successfully!';
-            successMsg.style.cssText = `
-                position: fixed;
-                top: 100px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #27ae60;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 50px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                z-index: 10000;
-                animation: slideDown 0.5s ease-out;
-            `;
-            
-            document.body.appendChild(successMsg);
-            contactForm.reset();
-            
-            setTimeout(() => {
-                successMsg.style.animation = 'fadeOut 0.5s ease-out';
-                setTimeout(() => successMsg.remove(), 500);
-            }, 3000);
+        if (!isValid) {
+            // Focus on first invalid input
+            if (firstInvalidInput) {
+                firstInvalidInput.focus();
+            }
+            return;
         }
+        
+        // All fields are valid, redirect to 404.html
+        window.location.href = '404.html';
     });
 }
 
@@ -568,3 +574,86 @@ window.addEventListener('load', () => {
 // ============================================
 console.log('%c Welcome to Stackly! ', 'background: #2ecc71; color: white; font-size: 20px; padding: 10px; border-radius: 5px;');
 console.log('%c Crafted with ❤️ by SuperAgent ', 'background: #764ba2; color: white; font-size: 14px; padding: 5px; border-radius: 3px;');
+
+// ============================================
+// DASHBOARD CHARTS
+// ============================================
+function initDashboardCharts() {
+    if (typeof Chart === 'undefined') return;
+
+    const ordersCtx = document.getElementById('chart-orders');
+    if (ordersCtx) {
+        new Chart(ordersCtx.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [{
+                    label: 'Orders',
+                    data: [5,8,12,9,15,20,18,25,22,30,28,35],
+                    borderColor: 'rgba(46,204,113,1)',
+                    backgroundColor: 'rgba(46,204,113,0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    const salesCtx = document.getElementById('chart-sales');
+    if (salesCtx) {
+        new Chart(salesCtx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Fruits','Dairy','Bakery','Beverages'],
+                datasets: [{
+                    label: 'Sales ($)',
+                    data: [1200, 900, 1500, 1750],
+                    backgroundColor: [
+                        'rgba(46,204,113,0.6)',
+                        'rgba(52,152,219,0.6)',
+                        'rgba(155,89,182,0.6)',
+                        'rgba(241,196,15,0.6)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    const pointsCtx = document.getElementById('chart-points');
+    if (pointsCtx) {
+        new Chart(pointsCtx.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Week 1','Week 2','Week 3','Week 4','Week 5','Week 6'],
+                datasets: [{
+                    label: 'Points',
+                    data: [10,25,40,60,80,100],
+                    borderColor: 'rgba(52,152,219,1)',
+                    backgroundColor: 'rgba(52,152,219,0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initDashboardCharts);

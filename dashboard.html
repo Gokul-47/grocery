@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Stackly</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Chart library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -40,76 +42,49 @@
     </nav>
 
     <!-- Dashboard Layout -->
-    <section class="dashboard-section">
+    <section class="dashboard-section dashboard">
         <div class="container-fluid">
-            <div class="dashboard-layout">
-                <!-- Sidebar -->
-                <aside class="dashboard-sidebar">
-                    <div class="user-profile">
-                        <div class="user-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
-                        <h3>Gokul</h3>
-                        <p>gokul@email.com</p>
-                    </div>
-                    <nav class="dashboard-nav">
-                        <a href="#overview" class="dash-nav-item active">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span> Overview
-                        </a>
-                        <a href="#orders" class="dash-nav-item">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path><line x1="3" y1="9" x2="21" y2="9"></line></svg></span> My Orders
-                        </a>
-                        <a href="#favorites" class="dash-nav-item">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span> Favorites
-                        </a>
-                        <a href="#subscription" class="dash-nav-item">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg></span> Subscription
-                        </a>
-                        <a href="#addresses" class="dash-nav-item">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span> Addresses
-                        </a>
-                        <a href="#payment" class="dash-nav-item">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span> Payment Methods
-                        </a>
-                        <a href="#settings" class="dash-nav-item">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span> Settings
-                        </a>
-                        <a href="#" class="dash-nav-item logout">
-                            <span class="dash-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16,17 21,12 16,7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span> Logout
-                        </a>
-                    </nav>
-                </aside>
-
-                <!-- Main Content -->
-                <main class="dashboard-main">
-                    <div class="dashboard-header">
+            <!-- Main Content -->
+            <main class="dashboard-main">
+                
+                    <div class="dashboard-header" id="overview">
                         <h1>Welcome Back, Gokul!</h1>
-                        <p>Here's what's happening with your account today</p>
+                        <p>Here’s what’s happening with your account today</p>
                     </div>
 
-                    <!-- Stats Cards -->
-                    <div class="dashboard-stats">
+                    <!-- Quick Stats -->
+                    <div class="quick-stats">
                         <div class="stat-card">
-                            <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path><line x1="3" y1="9" x2="21" y2="9"></line></svg></div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path><line x1="3" y1="9" x2="21" y2="9"></line></svg>
+                            </div>
                             <div class="stat-content">
                                 <h3>12</h3>
                                 <p>Total Orders</p>
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            </div>
                             <div class="stat-content">
                                 <h3>2</h3>
                                 <p>In Transit</p>
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            </div>
                             <div class="stat-content">
                                 <h3>$245</h3>
                                 <p>Total Spent</p>
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon></svg></div>
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon></svg>
+                            </div>
                             <div class="stat-content">
                                 <h3>150</h3>
                                 <p>Reward Points</p>
@@ -117,8 +92,24 @@
                         </div>
                     </div>
 
+                    <!-- Charts Section -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3>Monthly Orders</h3>
+                            <canvas id="chart-orders"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Sales by Category</h3>
+                            <canvas id="chart-sales"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Reward Points Over Time</h3>
+                            <canvas id="chart-points"></canvas>
+                        </div>
+                    </div>
+
                     <!-- Recent Orders -->
-                    <div class="dashboard-section-block">
+                    <div class="dashboard-section-block" id="orders">
                         <div class="section-block-header">
                             <h2>Recent Orders</h2>
                             <a href="#" class="view-all">View All</a>
@@ -154,60 +145,7 @@
                         </div>
                     </div>
 
-                    <!-- Favorites -->
-                    <div class="dashboard-section-block">
-                        <div class="section-block-header">
-                            <h2>Your Favorites</h2>
-                            <a href="#" class="view-all">View All</a>
-                        </div>
-                        <div class="favorites-grid">
-                            <div class="favorite-item">
-                                <div class="fav-image"><img src="images/dairy.avif" alt="Organic Apples"></div>
-                                <h4>Organic Apples</h4>
-                                <p class="fav-price">$4.99/lb</p>
-                                <button class="btn btn-primary btn-sm">Add to Cart</button>
-                            </div>
-                            <div class="favorite-item">
-                                <div class="fav-image"><img src="images/juice.avif" alt="Fresh Avocados"></div>
-                                <h4>Fresh Avocados</h4>
-                                <p class="fav-price">$2.99/each</p>
-                                <button class="btn btn-primary btn-sm">Add to Cart</button>
-                            </div>
-                            <div class="favorite-item">
-                                <div class="fav-image"><img src="images/milk.avif" alt="Organic Milk"></div>
-                                <h4>Organic Milk</h4>
-                                <p class="fav-price">$5.99/gal</p>
-                                <button class="btn btn-primary btn-sm">Add to Cart</button>
-                            </div>
-                            <div class="favorite-item">
-                                <div class="fav-image"><img src="images/bread.avif" alt="Sourdough Bread"></div>
-                                <h4>Sourdough Bread</h4>
-                                <p class="fav-price">$5.99/loaf</p>
-                                <button class="btn btn-primary btn-sm">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Active Subscription -->
-                    <div class="dashboard-section-block">
-                        <div class="section-block-header">
-                            <h2>Active Subscription</h2>
-                            <a href="#" class="view-all">Manage</a>
-                        </div>
-                        <div class="subscription-card">
-                            <div class="sub-info">
-                                <h3>Weekly Organic Box</h3>
-                                <p>Next delivery: March 8, 2024</p>
-                                <p>Status: <span class="status-active">Active</span></p>
-                            </div>
-                            <div class="sub-actions">
-                                <button class="btn btn-secondary">Pause</button>
-                                <button class="btn btn-primary">Customize</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Account Activity -->
+                    <!-- Recent Activity -->
                     <div class="dashboard-section-block">
                         <div class="section-block-header">
                             <h2>Recent Activity</h2>
@@ -240,7 +178,6 @@
                         </div>
                     </div>
                 </main>
-            </div>
         </div>
     </section>
 
@@ -255,10 +192,10 @@
                     </div>
                     <p>Your trusted partner for fresh, organic groceries delivered right to your door.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                        <a href="#" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg></a>
-                        <a href="#" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-                        <a href="#" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                        <a href="404.html" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="404.html" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg></a>
+                        <a href="404.html" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        <a href="404.html" class="social-link"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -273,19 +210,19 @@
                 <div class="footer-col">
                     <h4>Categories</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Fruits & Vegetables</a></li>
-                        <li><a href="#">Dairy Products</a></li>
-                        <li><a href="#">Bakery</a></li>
-                        <li><a href="#">Beverages</a></li>
+                        <li><a href="404.html">Fruits & Vegetables</a></li>
+                        <li><a href="404.html">Dairy Products</a></li>
+                        <li><a href="404.html">Bakery</a></li>
+                        <li><a href="404.html">Beverages</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Customer Service</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Track Order</a></li>
-                        <li><a href="#">Returns</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="404.html">Help Center</a></li>
+                        <li><a href="404.html">Track Order</a></li>
+                        <li><a href="404.html">Returns</a></li>
+                        <li><a href="404.html">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
