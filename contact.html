@@ -92,7 +92,7 @@
                             <label>Message *</label>
                             <textarea class="form-input" rows="6" required></textarea>
                         </div>
-                        <a href="404.html" class="btn btn-primary btn-large">Send Message</a>
+                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
                     </form>
                 </div>
                 <div class="contact-info-section">
@@ -386,5 +386,84 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get form elements
+            const form = this;
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            // Get values in order
+            const firstName = inputs[0].value.trim(); // First Name
+            const lastName = inputs[1].value.trim(); // Last Name
+            const email = inputs[2].value.trim(); // Email
+            const phone = inputs[3].value.trim(); // Phone
+            const subject = inputs[4].value; // Subject (select)
+            const message = inputs[5].value.trim(); // Message (textarea)
+            
+            // Validation patterns
+            const namePattern = /^[a-zA-Z\s]+$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phonePattern = /^[\+]?[1-9][\d]{0,15}$/;
+            
+            let isValid = true;
+            let errors = [];
+            
+            // Validate First Name
+            if (!firstName) {
+                isValid = false;
+                errors.push('First name is required');
+            } else if (!namePattern.test(firstName)) {
+                isValid = false;
+                errors.push('First name can only contain letters and spaces');
+            }
+            
+            // Validate Last Name
+            if (!lastName) {
+                isValid = false;
+                errors.push('Last name is required');
+            } else if (!namePattern.test(lastName)) {
+                isValid = false;
+                errors.push('Last name can only contain letters and spaces');
+            }
+            
+            // Validate Email
+            if (!email) {
+                isValid = false;
+                errors.push('Email is required');
+            } else if (!emailPattern.test(email)) {
+                isValid = false;
+                errors.push('Please enter a valid email address');
+            }
+            
+            // Validate Phone (optional)
+            if (phone && !/^[\+]?[\d\s\-\(\)]{7,15}$/.test(phone)) {
+                isValid = false;
+                errors.push('Please enter a valid phone number');
+            }
+            
+            // Validate Subject
+            if (!subject) {
+                isValid = false;
+                errors.push('Please select a subject');
+            }
+            
+            // Validate Message
+            if (!message) {
+                isValid = false;
+                errors.push('Message is required');
+            }
+            
+            // If validation fails, show errors
+            if (!isValid) {
+                alert('Please correct the following errors:\n\n' + errors.join('\n'));
+                return;
+            }
+            
+            // If validation passes, redirect to 404 page
+            window.location.href = '404.html';
+        });
+    </script>
 </body>
 </html>
