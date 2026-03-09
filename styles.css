@@ -391,6 +391,7 @@ a {
 .btn-primary {
     background: var(--white);
     color: var(--primary-color);
+    border: 1px solid;
 }
 
 .btn-primary:hover {
@@ -400,8 +401,8 @@ a {
 
 .btn-secondary {
     background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
+    color: var(--dark-color);
+    border: 2px solid var(--dark-color);
 }
 
 .btn-secondary:hover {
@@ -1447,6 +1448,11 @@ a {
     z-index: 1;
 }
 
+.offer-card .btn {
+    margin-top: 2rem;
+    padding: 5px;
+}
+
 .offer-badge {
     position: absolute;
     top: 20px;
@@ -1895,6 +1901,7 @@ a {
 @media (max-width: 768px) {
     .hero .container {
         grid-template-columns: 1fr;
+        margin-top:100px;
     }
     
     .hero-title {
@@ -2671,6 +2678,9 @@ a {
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .support-icon {
@@ -2992,6 +3002,9 @@ a {
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .qc-icon {
@@ -3163,13 +3176,7 @@ a {
     width: 100%;
     padding: 2rem 0;
 }
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--dark-color);
-    transition: all 0.3s ease;
-}
+
 
 .dash-nav-item:hover, .dash-nav-item.active {
     background: var(--gradient-green);
@@ -3497,13 +3504,7 @@ a {
         padding-left: 1.5rem;
     }
 }
-    align-items: center;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: var(--light-color);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
+   
 
 .stat-card:hover {
     transform: translateY(-5px);
